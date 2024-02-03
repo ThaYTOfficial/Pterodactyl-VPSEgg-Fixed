@@ -10,7 +10,7 @@
     "description": "Run an Ubuntu VPS in pterodactyl!",
     "features": null,
     "docker_images": {
-        "quay.io\/ydrag0n\/pterodactyl-vps-egg": "quay.io\/ydrag0n\/pterodactyl-vps-egg"
+        "ghcr.io\/fakeerrorx\/ubuntu": "ghcr.io\/fakeerrorx\/ubuntu"
     },
     "file_denylist": [],
     "startup": ".\/start.sh",
@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "#!\/bin\/bash\r\n\r\ncd \/mnt\/server\/",
-            "container": "quay.io\/ydrag0n\/pterodactyl-vps-egg",
+            "container": "ghcr.io\/fakeerrorx\/ubuntu",
             "entrypoint": "bash"
         }
     },
