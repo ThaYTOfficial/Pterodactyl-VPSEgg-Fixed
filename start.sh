@@ -1,10 +1,10 @@
 #!/bin/bash
 echo "started"
 git clone https://github.com/foxytouxxx/freeroot.git
-apt update
-apt install sudo
 cd freeroot
 bash root.sh
+apt update
+apt install sudo
 
 sudo apt-get install systemd
 sudo apt install -y curl wget git python3
