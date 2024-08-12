@@ -10,7 +10,7 @@
     "description": "Run an Ubuntu VPS in pterodactyl!",
     "features": null,
     "docker_images": {
-        "ghcr.io\/fakeerrorx\/ubuntu": "ghcr.io\/fakeerrorx\/ubuntu"
+        "ghcr.io\/ThaYTOfficial\/ubuntu": "ghcr.io\/ThaYTOfficial\/ubuntu"
     },
     "file_denylist": [],
     "startup": ".\/start.sh",
@@ -23,7 +23,7 @@
     "scripts": {
         "installation": {
             "script": "#!\/bin\/bash\r\n\r\ncd \/mnt\/server\/",
-            "container": "ghcr.io\/fakeerrorx\/ubuntu",
+            "container": "ghcr.io\/ThaYTOfficial\/ubuntu",
             "entrypoint": "bash"
         }
     },
