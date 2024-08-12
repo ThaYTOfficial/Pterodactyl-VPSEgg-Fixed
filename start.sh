@@ -1,15 +1,10 @@
 #!/bin/bash
 echo "started"
-docmd() {
-    read -p "user@MyVPS:~ " CMD
-    eval "$CMD"
-    echo "user@MyVPS:~ "
-    docmd2
-}
-docmd2() {
-    read -p "user@MyVPS:~ " CMD2
-    eval "$CMD2"
-    echo "user@MyVPS:~ "
-    docmd
-}
-docmd
+git clone https://github.com/foxytouxxx/freeroot.git
+cd freeroot
+bash root.sh
+
+sudo apt install -y curl wget git python3
+sudo curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py
+sudo chmod -R 777 /bin/systemctl
+sudo apt-get install systemd
