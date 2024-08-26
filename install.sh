@@ -1,9 +1,11 @@
 #!/bin/bash
+# Free root
 apt update
 git clone https://github.com/foxytouxxx/freeroot.git
 cd freeroot
 bash root.sh
 
+# Install SystemD and SystemCTL
 apt install sudo
 sudo apt-get install systemd
 sudo apt install -y curl wget git python3
