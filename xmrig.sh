@@ -7,4 +7,5 @@ mkdir build
 cd build
 cmake ..
 make -j$(nproc)
+cd xmrig/build
 printf "${GREEN}Now got to https://xmrig.com/wizard and setup ur pool"
