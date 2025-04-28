@@ -11,7 +11,6 @@ STAR7="$HOMEA/usr/lib/x86_64-linux-gnu/blis-openmp:$HOMEA/usr/lib/x86_64-linux-g
 STARALL="$STAR1:$STAR2:$STAR3:$STAR4:$STAR5:$STAR6:$STAR7"
 export LD_LIBRARY_PATH=$STARALL
 export PATH="/bin:/usr/bin:/usr/local/bin:/sbin:$HOMEA/bin:$HOMEA/usr/bin:$HOMEA/sbin:$HOMEA/usr/sbin:$HOMEA/etc/init.d:$PATH"
-export BUILD_DIR=$HOMEA
 
 bold=$(echo -en "\e[1m")
 nc=$(echo -en "\e[0m")
@@ -34,7 +33,6 @@ ${bold}${lightblue} :           :     : :: ::    :   : :   : :  :         :     
                                                                                                   
 ${bold}${lightgreen}========================================================================
 "
-
 echo "${nc}"
 
 if [[ -f "./installed" ]]; then
@@ -42,60 +40,52 @@ if [[ -f "./installed" ]]; then
     function runcmd1 {
         printf "${bold}${lightgreen}Default${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
+        ./proot -S . /bin/bash -c "$cmdtorun"
         runcmd
     }
     function runcmd {
         printf "${bold}${lightgreen}Default${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
+        ./proot -S . /bin/bash -c "$cmdtorun"
         runcmd1
     }
     runcmd
 else
     echo "Downloading files for application"
-    
+
     curl -sSLo ngrok.zip https://bin.equinox.io/c/4VmDzA7iaHb/ngrok-stable-linux-amd64.zip >/dev/null 2>err.log
     echo -ne '#                   (5%)\r'
 
-    # Download Ubuntu 22.04 root filesystem
     curl -sSLo root.tar.xz https://partner-images.canonical.com/core/jammy/current/ubuntu-jammy-core-cloudimg-amd64-root.tar.xz >/dev/null 2>err.log
     echo -ne '####                (20%)\r'
 
     curl -sSLo unzip https://raw.githubusercontent.com/afnan007a/Ptero-vm/main/unzip >/dev/null 2>err.log
-    echo -ne '#####               (25%)\r'
-
     curl -sSLo gotty https://raw.githubusercontent.com/afnan007a/Replit-Vm/main/gotty >/dev/null 2>err.log
     chmod +x unzip gotty >/dev/null 2>err.log
     echo -ne '######               (30%)\r'
 
-    # Extract Ubuntu 22.04 rootfs
+    curl -sSLo proot https://github.com/proot-me/proot/releases/download/v5.3.0/proot-x86_64
+    chmod +x proot
+    echo -ne '#######              (35%)\r'
+
+    ./unzip ngrok.zip >/dev/null 2>err.log
+    rm -rf ngrok.zip
+    chmod +x ngrok
+    export PATH="$PWD:$PATH"
+
     mkdir -p ubuntu22
     tar -xf root.tar.xz -C ubuntu22 >/dev/null 2>err.log
-    echo -ne '########             (40%)\r'
-
     mv ubuntu22/* . >/dev/null 2>err.log
     rm -rf ubuntu22 root.tar.xz
-    echo -ne '#########            (45%)\r'
-
-    chmod +x ./libraries/proot >/dev/null 2>err.log
-    ./unzip ngrok.zip >/dev/null 2>err.log
-    rm -rf ngrok.zip >/dev/null 2>err.log
-
-    echo -ne '##########           (50%)\r'
-    mv gotty /usr/bin/
-    mv unzip /usr/bin/
-    mv ngrok /usr/bin/
-    echo -ne '###########          (55%)\r'
+    echo -ne '########             (40%)\r'
 
     cmds=("apt-get update" "apt-get -y upgrade" "apt-get -y install sudo curl wget hwloc htop nano neofetch python3" "curl -o /bin/systemctl https://raw.githubusercontent.com/gdraheim/docker-systemctl-replacement/master/files/docker/systemctl3.py")
 
     for cmd in "${cmds[@]}"; do
-        ./libraries/proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
+        ./proot -S . /bin/bash -c "$cmd >/dev/null 2>err.log"
     done
 
-    echo -ne '####################(100%)\r'
-    echo -ne '\n'
+    echo -ne '####################(100%)\r\n'
     touch installed
 
     echo "
@@ -114,20 +104,19 @@ ${bold}${lightblue} :           :     : :: ::    :   : :   : :  :         :     
                                                                                                   
 ${bold}${lightgreen}========================================================================
 "
- 
     echo "${nc}"
     
     echo "${bold}${lightgreen}==> Started ${lightblue}Container${lightgreen} <=="
     function runcmd1 {
         printf "${bold}${lightgreen}Default${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
+        ./proot -S . /bin/bash -c "$cmdtorun"
         runcmd
     }
     function runcmd {
         printf "${bold}${lightgreen}Default${nc}@${lightblue}Container${nc}:~ "
         read -r cmdtorun
-        ./libraries/proot -S . /bin/bash -c "$cmdtorun"
+        ./proot -S . /bin/bash -c "$cmdtorun"
         runcmd1
     }
     runcmd
